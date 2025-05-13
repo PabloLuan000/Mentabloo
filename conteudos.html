@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conteúdos de Prova - Mentabloo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: #4f46e5;
+      padding: 1rem 2rem;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.2rem;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      padding: 0.6rem 1rem;
+      background: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .conteudo {
+      background: #f0f0f0;
+      padding: 1rem;
+      border-radius: 6px;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mentabloo - Conteúdos de Prova</h1>
+    <a href="index.html" style="color: white; text-decoration: underline;">Início</a>
+  </header>
+
+  <div class="container">
+    <input type="text" id="titulo" placeholder="Título da Matéria">
+    <textarea id="descricao" rows="4" placeholder="Conteúdo que cairá na prova..."></textarea>
+    <button onclick="adicionarConteudo()">Salvar Conteúdo</button>
+
+    <div id="lista"></div>
+  </div>
+
+  <script>
+    let conteudos = JSON.parse(localStorage.getItem("mentabloo_conteudos")) || [];
+
+    function salvarConteudos() {
+      localStorage.setItem("mentabloo_conteudos", JSON.stringify(conteudos));
+    }
+
+    function renderizarConteudos() {
+      const lista = document.getElementById("lista");
+      lista.innerHTML = '';
+      conteudos.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.className = "conteudo";
+        div.innerHTML = `<strong>${item.titulo}</strong><p>${item.descricao}</p>
+          <button onclick="remover(${index})">Remover</button>`;
+        lista.appendChild(div);
+      });
+    }
+
+    function adicionarConteudo() {
+      const titulo = document.getElementById("titulo").value.trim();
+      const descricao = document.getElementById("descricao").value.trim();
+      if (titulo && descricao) {
+        conteudos.push({ titulo, descricao });
+        salvarConteudos();
+        renderizarConteudos();
+        document.getElementById("titulo").value = '';
+        document.getElementById("descricao").value = '';
+      }
+    }
+
+    function remover(index) {
+      conteudos.splice(index, 1);
+      salvarConteudos();
+      renderizarConteudos();
+    }
+
+    renderizarConteudos();
+  </script>
+</body>
+</html>
