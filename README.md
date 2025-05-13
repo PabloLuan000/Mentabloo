@@ -1,1 +1,1 @@
-# Mentabloo
+A Mentabloo é uma plataforma amiga do estudante. Ela ajuda-o a organizar tarefas, tempo de estudo, conteúdos a serem estudados e muito mais! Focada em estudantes do ensino fundamental e ensino médio, é a mais completa de todas as plataformas de estudos.
